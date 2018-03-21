@@ -1,0 +1,44 @@
+---
+title: "Pairs Exploration"
+author: "Zarni Htet"
+output: github_document
+---
+
+### Libraries 
+
+```{r}
+library(rio)
+```
+
+### Importing cleaned data
+```{r}
+All_BIDS <- import("CT_BIDs_Full.dta")
+```
+
+### Exploring the cleaned data
+```{r}
+head(All_BIDS)
+```
+
+### Checking out the Number of BIDS based on name
+```{r}
+length(unique(All_BIDS$BID_name))
+head(All_BIDS$BID_name)
+```
+
+### Checking out the Number of BIDS based on ID
+```{r}
+length(unique(All_BIDS$BID_id))
+head(All_BIDS$BID_id)
+```
+
+### General Clarification Comments
+
+1. The BIDS ID and the BID Names are the same but with Zeros being stripped?
+2. The characteristics of the Census tract right now is its area, borough? These will be joined with more census tract characteristics?
+3. What is Census Tract weight?
+
+
+
+
+

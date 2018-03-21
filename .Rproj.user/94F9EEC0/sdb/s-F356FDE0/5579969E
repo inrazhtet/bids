@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1521588751170.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "5579969E",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1521588751170,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "EF203817",
+        "caption" : "CT_BIDs",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=CT_BIDs&cache_key=EF203817",
+        "displayedObservations" : 233,
+        "environment" : "",
+        "object" : "CT_BIDs",
+        "preview" : 0,
+        "totalObservations" : 233,
+        "variables" : 10
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

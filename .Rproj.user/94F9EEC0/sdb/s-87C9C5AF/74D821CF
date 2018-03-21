@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1521603587893.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "74D821CF",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1521603587893,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "39E3A49E",
+        "caption" : "Directory_Of_Business_Improvement_Districts",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Directory_Of_Business_Improvement_Districts&cache_key=39E3A49E",
+        "displayedObservations" : 75,
+        "environment" : "",
+        "object" : "Directory_Of_Business_Improvement_Districts",
+        "preview" : 0,
+        "totalObservations" : 75,
+        "variables" : 18
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

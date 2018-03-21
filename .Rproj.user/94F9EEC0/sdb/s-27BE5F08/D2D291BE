@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Pairs Exploration\"\nauthor: \"Zarni Htet\"\noutput: github_document\n---\n\n### Libraries \n\n```{r, R.options= \"false\"}\nrequire(rio) #for importing data\nrequire(bit64) #for integer values\n```\n\n## Census Tract-BID Data\n\n### Importing Cleaned Census Tract/BIDs data\n```{r}\nAll_BIDS <- import(\"data/intermediate/CT_BIDs_Full.dta\")\n```\n\n### Exploring the cleaned data\n```{r}\nhead(All_BIDS)\n```\n\n### Checking out the Number of BIDS based on name\n```{r}\nlength(unique(All_BIDS$BID_name))\nhead(All_BIDS$BID_name)\n```\n\n### Checking out the Number of BIDS based on ID\n```{r}\nlength(unique(All_BIDS$BID_id))\nhead(All_BIDS$BID_id)\n```\n\n### General Clarification Comments\n\n1. The BIDS ID and the BID Names are the same but with Zeros being stripped?\n2. The characteristics of the Census tract right now is its area & borough? These will be joined with more census tract characteristics?\n3. What is Census Tract weight?\n\n\n## BiDs Data\n\n### Importing BiDs data\n```{r}\nbidsmerged <- import(\"data/processing/BiDsMerged.csv\")\n```\n\n### Initial Exploration\n```{r}\nhead(bidsmerged)\n```\n\n### Things to Do\n\n1. Fill in the NAs of No. Block Faces Covered and No. Ground Floor Retail Businesses using\nhttps://www1.nyc.gov/site/sbs/neighborhoods/bid-directory.page?bid=30\n\n2. Separate out the Organization Year Variable\n\n3. Clean Zipcode\n\n4. Convert dollar signs to integers\n",
+    "created" : 1521616455619.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3396799967",
+    "id" : "D2D291BE",
+    "lastKnownWriteTime" : 1521616968,
+    "last_content_update" : 1521616968672,
+    "path" : "~/Desktop/DataAnalytics/02_Pairs_Exploration.Rmd",
+    "project_path" : "02_Pairs_Exploration.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "docOutlineVisible" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
