@@ -6,18 +6,23 @@ output: github_document
 
 ### Libraries 
 
-```{r}
-library(rio)
+```{r, R.options= false}
+require(rio) # for importing data sets
+require(bit64) # for integer values later on
 ```
+
+
+## CT_Bids Full
 
 ### Importing cleaned data
 ```{r}
-All_BIDS <- import("CT_BIDs_Full.dta")
+All_BIDS <- import("../data/intermediate/CT_BIDs_Full.dta")
 ```
 
 ### Exploring the cleaned data
 ```{r}
 head(All_BIDS)
+print(dim(All_BIDS))
 ```
 
 ### Checking out the Number of BIDS based on name
@@ -32,13 +37,28 @@ length(unique(All_BIDS$BID_id))
 head(All_BIDS$BID_id)
 ```
 
-### General Clarification Comments
+## Bids Merged Data
 
-1. The BIDS ID and the BID Names are the same but with Zeros being stripped?
-2. The characteristics of the Census tract right now is its area, borough? These will be joined with more census tract characteristics?
-3. What is Census Tract weight?
+### Importing BiDs Merged Data
+```{r}
+bidsmerged <- import("../data/processing/BiDsMerged.csv")
+```
 
+### Exploring BiDs data
+```{r}
+head(bidsmerged)
+```
 
+### Things to do with BiDs Merged
+
+1. Fill the missing org_blocks and org_businesses using
+https://www1.nyc.gov/site/sbs/neighborhoods/bid-directory.page?bid=30
+
+2. Split the Founding Year variable
+
+3. Fix the Zipcode
+
+4. Fix the dollar sign of assessment
 
 
 
