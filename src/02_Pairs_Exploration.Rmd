@@ -60,5 +60,11 @@ https://www1.nyc.gov/site/sbs/neighborhoods/bid-directory.page?bid=30
 
 4. Fix the dollar sign of assessment
 
+### Equation
+
+$$
+residentialflight_i = householdvariables{i,j} +  
+$$
+
 
 

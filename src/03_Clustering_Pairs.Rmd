@@ -1,0 +1,163 @@
+---
+title: "Clustering for Pairs"
+author: "Zarni Htet"
+output: github_document
+---
+
+### Objective
+
+In this markdown, we look at housing variables by census tract to determine which census tracts are similar to one another. We will be deploying KMeans algorithm to some selected for some selected variables 
+
+Libraries
+```{r, R.options=TRUE}
+require(rio) #For loading data sets
+require(cluster) #clustering algorithms
+require(factoextra) #clustering algorithms & visualization
+require(tidyr) #For data manipulation
+library(mi) #For data missingness analysis
+require(NbClust)
+```
+
+#### Loading Cleaned data from Monica
+
+```{r}
+ct_housingdata <- import("../data/processing/CT_HHinfo_Full.csv")
+```
+
+
+#### Initial Explorations
+
+```{r}
+head(ct_housingdata)
+print(dim(ct_housingdata))
+```
+
+There appears to be data missing problems. K-Means cannot handle clustering with missing data. We will either have to remove it or impute it later. For now, let's look at the pattern of missingness. Before that, let's only pare the data frame down to the variables of interest for us.
+
+#### Puning the data frame to Variable of Interest
+
+Of the 25 variables for each year, we are focused on **continuous** variables for initial clustering from the year 2000. Below are the variables we have picked with a short description of the variables.
+
+* med_rent_00 : median rent income in year 2000
+* hhinc_all_00 : household income all in year 2000
+* hhinc_owners_00 : household income owners in year 2000 **NOT INCLUDED FOR NOW**
+* hhinc_renters_00 : household income renters in year 2000 **NOT INCLUDED FOR NOW**
+* pct_inc_rent_00 : percent of income to rent in year 2000
+* own_rate_00 : percentage of owner of households in year 2000
+* owner_hh_00 : number of owner household in year 2000  **NOT INCLUDED FOR NOW**
+* renter_hh_00 : number of renter household in year 2000  **NOT INCLUDED FOR NOW**
+* shwhite_hh_00 : percentage of white household in year 2000
+* shblack_hh_00 : percentage of black household in year 2000  **NOT INCLUDED FOR NOW**
+* shasian_hh_00 : percentage of asian household in year 2000  **NOT INCLUDED FOR NOW**
+* ed1_ns_00 : percentage of education no school in year 2000
+* ed2_hs_00 : percentage of education high school in year 2000  **NOT INCLUDED FOR NOW**
+* ed3_sc_00 : percentage of some college education in year 2000 **NOT INCLUDED FOR NOW**
+* ed4_bc_00 : percentage of bachelor college in year 2000 **NOT INCLUDED FOR NOW**
+
+#### Extracting Household data of selected variables for year 2000
+
+```{r}
+colnames(ct_housingdata)
+```
+
+Household data extract for Year 2000
+
+```{r}
+ct_housing_2000 <- ct_housingdata[,c(2,3,6,15,21,54,66)]
+row.names(ct_housing_2000) <- ct_housing_2000$CT_id_full
+ct_housing_2000 <- ct_housing_2000[,-1]
+head(ct_housing_2000)
+```
+
+#### Missingness examiniations
+
+```{r}
+mdf = missing_data.frame(ct_housing_2000)
+```
+
+Some of the variable missingness patterns seems to be correlated with each other. What does median income of household has to do with the percentage white in that census tract? There needs to be a narrative to this story that we may want to include in the final report.
+
+Visualizing missingness across variables
+
+```{r}
+image(mdf)
+```
+
+The image demonstrates as wite the note above that the missingness across variables are correlated. However, the good news is that they are clumped to certain census tracts. We can effectively remove them.
+
+Removing the missing data
+
+```{r}
+ct_housing_2000_no_missing <- ct_housing_2000[complete.cases(ct_housing_2000),]
+print(sum(is.na(ct_housing_2000_no_missing)))
+```
+
+#### Applying K Means Clustering
+
+Scaling the continuous variables first
+
+```{r}
+ct_housing_2000_no_missing <- scale(ct_housing_2000_no_missing)
+print(dim(ct_housing_2000_no_missing))
+head(ct_housing_2000_no_missing)
+```
+Essentially, there is exactly 2115 Census Tract groups we are trying to cluster.
+
+
+Implementing K-Means Cluster referencing this site: https://uc-r.github.io/kmeans_clustering
+
+Let's assume we want around 22 clusters. We can change the size of the clusters later on. There is a method to apply to pick the optimal clusters. It will be implemented later on.
+
+```{r}
+k22 <- kmeans(ct_housing_2000_no_missing, centers = 22, nstart = 25, iter.max = 30)
+```
+
+Visualizing the Clusters
+
+The Census Tracts strings are very long and not visually appealing. We can maybe map them to single digits to make it more appealing on the visual plot
+```{r}
+fviz_cluster(k22, data = ct_housing_2000_no_missing)
+```
+
+Examining the Clustering Structure
+
+```{r}
+str(k22)
+#Of particular interest to us would be the cluster and centers!
+```
+
+```{r}
+print(k22)
+```
+
+Applying the Clustering Vector to the data set to generate output data
+
+```{r}
+cluster_ct_house_2000 <- cbind(ct_housing_2000_no_missing, clusterNum = k22$cluster)
+cluster_ct_house_2000 <- cluster_ct_house_2000[, c(7,1:6)]
+head(cluster_ct_house_2000)
+```
+
+Writing Out the Data File
+
+```{r}
+write.csv(cluster_ct_house_2000, "../data/final/cluster_ct_house_2000.csv")
+```
+
+
+
+### Next Steps (not necessarily in this order. Maybe an iterative process)
+
+* Determining optimal cluster size using Elbow method and deploying it
+* Determining if **K-Means** is the best Clustering Algorithm choice
+* Determining if we have used all the **right** variables in the feature selection for K-Means 
+* After we have created the clustering pairs we need to layer the Census Tracts with those that have BiDs vs Non-BiDs
+
+Don't have enough domain expertise to see what might be the problems in these comparisons but, looking forward to resolve them!
+
+
+
+
+
+
+
